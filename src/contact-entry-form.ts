@@ -1,6 +1,5 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { exampleCategories } from './example-categories'
 
 interface Category {
   id: string;
@@ -79,7 +78,7 @@ export class ContactEntryForm extends LitElement {
   `;
 
   @property({ type: Array })
-  categories: Category[] = exampleCategories;
+  categories: Category[] = [];
 
   @state()
   private selectedLevel1: string = '';

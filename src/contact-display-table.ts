@@ -1,6 +1,5 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { exampleCategories } from './example-categories';
 
 
 interface ContactEntry {
@@ -106,7 +105,7 @@ export class ContactDisplayTable extends LitElement {
   contacts: ContactEntry[] = [];
 
   @property({ type: Array })
-  categories: Category[] = exampleCategories;
+  categories: Category[] = [];
 
   // Helper method to find category name by id
   private getCategoryName(id: string): string {

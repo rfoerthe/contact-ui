@@ -5,8 +5,7 @@
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact Management</title>
-  <script type="module" src="/src/contact-entry-form.ts"></script>
-  <script type="module" src="/src/contact-display-table.ts"></script>
+  <script type="module" src="/src/contact-app.ts"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -20,81 +19,6 @@
   </style>
 </head>
 <body>
-  <h1>Contact Management</h1>
-  
-  <contact-entry-form id="entry-form"></contact-entry-form>
-  <contact-display-table id="display-table"></contact-display-table>
-  
-  <script>
-    // Get references to our components
-    const entryForm = document.getElementById('entry-form');
-    const displayTable = document.getElementById('display-table');
-    
-    // Set the same categories for both components
-    // entryForm.categories = categories;
-    // displayTable.categories = categories;
-    
-    // Initialize contacts array
-    let contacts = [];
-    
-    // Load existing contacts from localStorage if available
-    const savedContacts = localStorage.getItem('contacts');
-    if (savedContacts) {
-      contacts = JSON.parse(savedContacts);
-      displayTable.contacts = contacts;
-    }
-    
-    // Handle saving new contacts
-    entryForm.addEventListener('save', (e) => {
-      const contactData = e.detail;
-      
-      // Add unique id and timestamp
-      const newContact = {
-        ...contactData,
-        id: Date.now().toString(),
-        timestamp: Date.now()
-      };
-      
-      // Add to contacts array
-      contacts.push(newContact);
-      
-      // Update the display table
-      displayTable.contacts = [...contacts];
-      
-      // Save to localStorage
-      localStorage.setItem('contacts', JSON.stringify(contacts));
-    });
-    
-    // Handle deleting contacts
-    displayTable.addEventListener('delete-contact', (e) => {
-      const { id } = e.detail;
-      
-      // Remove from contacts array
-      contacts = contacts.filter(contact => contact.id !== id);
-      
-      // Update the display table
-      displayTable.contacts = [...contacts];
-      
-      // Save to localStorage
-      localStorage.setItem('contacts', JSON.stringify(contacts));
-    });
-    
-    // Handle editing contacts
-    displayTable.addEventListener('edit-contact', (e) => {
-      const { contact } = e.detail;
-      
-      // Set form values for editing
-      entryForm.loadContact(contact);
-      
-      // Remove the contact to be edited
-      contacts = contacts.filter(c => c.id !== contact.id);
-      
-      // Update the display table
-      displayTable.contacts = [...contacts];
-      
-      // Save to localStorage
-      localStorage.setItem('contacts', JSON.stringify(contacts));
-    });
-  </script>
+  <contact-app></contact-app>
 </body>
 </html>
