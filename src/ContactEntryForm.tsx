@@ -187,8 +187,10 @@ export const ContactEntryForm: React.FC<ContactEntryFormProps> = ({
           button {
             padding: 8px 16px;
             border-radius: 4px;
-            font-size: 14px;
             cursor: pointer;
+          }
+          .save, .cancel {
+            font-size: 14px;
           }
           .cancel {
             background-color: #f5f5f5;
