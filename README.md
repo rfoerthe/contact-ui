@@ -1,13 +1,17 @@
-# contact-vanilla-webcomponents
+# contact-ui
 
-A contact management proof of concept built with valla Web Components API and
-TypeScript, featuring project setup and build processes managed by [Vite](https://vitejs.dev/).
+A contact management proof of concept app built in three configurations:
+* with vanilla Web Components
+* with [Lit](https://lit.dev/)
+* with React
+
+and TypeScript featuring project setup and build processes managed by [Vite](https://vitejs.dev/).
 
 ## Project Structure
 
     contact-lit/ 
     ├── public/ # Public static assets 
-    ├── src/ # Application source code (TypeScript, CSS) 
+    ├── src/ # Application source code (TypeScript, CSS, TSX) 
     ├── index.html # Main entry point of the application 
     ├── package.json # Project and dependency definitions 
     ├── package-lock.json # Exact dependency versions 
@@ -71,6 +75,7 @@ Indentation is automatically handled by most modern editors. Alternatively, you 
 - [Lit Documentation](https://lit.dev/docs/)
 - [Vite Documentation](https://vitejs.dev/guide/)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
+- [React Documentation](https://react.dev/)
 
 ---
 
