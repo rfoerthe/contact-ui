@@ -25,7 +25,7 @@ export class ContactApp extends LitElement {
     :host {
       display: block;
       font-family: Arial, sans-serif;
-      max-width: 1000px;
+      max-width: 1024px;
       margin: 0 auto;
       padding: 20px;
     }
