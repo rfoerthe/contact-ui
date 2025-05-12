@@ -1,0 +1,10 @@
+.contact-app-root {
+    display: block;
+    font-family: Arial, sans-serif;
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.contact-app-root h1 {
+    color: #333;
+}

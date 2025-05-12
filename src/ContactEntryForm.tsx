@@ -1,92 +1,42 @@
-import React, {useState, useMemo, type ChangeEvent, useEffect} from "react";
-
-export interface Category {
-  id: string;
-  name: string;
-  children?: Category[];
-}
+import React from "react";
+import type {Category} from "./types.ts";
+import './ContactEntryForm.css';
 
 interface ContactEntryFormProps {
   categories: Category[];
-  onCancel?: () => void;
-  onSave?: (data: { level1: string; level2: string; level3: string; comment: string }) => void;
-  initialContact?: { level1: string; level2: string; level3: string; comment: string };
+  level1: string;
+  setLevel1: (val: string) => void;
+  level2: string;
+  setLevel2: (val: string) => void;
+  level3: string;
+  setLevel3: (val: string) => void;
+  comment: string;
+  setComment: (val: string) => void;
+  onSave: () => void;
+  onCancel: () => void;
 }
 
 export const ContactEntryForm: React.FC<ContactEntryFormProps> = ({
-                                                                    categories,
-                                                                    onCancel,
-                                                                    onSave,
-                                                                    initialContact,
-                                                                  }) => {
-  const [selectedLevel1, setSelectedLevel1] = useState(initialContact?.level1 || "");
-  const [selectedLevel2, setSelectedLevel2] = useState(initialContact?.level2 || "");
-  const [selectedLevel3, setSelectedLevel3] = useState(initialContact?.level3 || "");
-  const [comment, setComment] = useState(initialContact?.comment || "");
-
-  useEffect(() => {
-    setSelectedLevel1(initialContact?.level1 || "");
-    setSelectedLevel2(initialContact?.level2 || "");
-    setSelectedLevel3(initialContact?.level3 || "");
-    setComment(initialContact?.comment || "");
-  }, [initialContact]);
+                                                                    categories, level1, setLevel1, level2, setLevel2, level3, setLevel3,
+                                                                    comment, setComment, onSave, onCancel
+                                                                  }
+) => {
 
 
-  const level2Categories = useMemo(() => {
-    return categories.find(cat => cat.id === selectedLevel1)?.children || [];
-  }, [categories, selectedLevel1]);
-
-  const level3Categories = useMemo(() => {
-    return level2Categories.find(cat => cat.id === selectedLevel2)?.children || [];
-  }, [level2Categories, selectedLevel2]);
-
-  const resetForm = () => {
-    setSelectedLevel1("");
-    setSelectedLevel2("");
-    setSelectedLevel3("");
-    setComment("");
-  };
-
-  const handleLevel1Change = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedLevel1(e.target.value);
-    setSelectedLevel2("");
-    setSelectedLevel3("");
-  };
-
-  const handleLevel2Change = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedLevel2(e.target.value);
-    setSelectedLevel3("");
-  };
-
-  const handleLevel3Change = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedLevel3(e.target.value);
-  };
-
-  const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setComment(e.target.value);
-  };
-
-  const handleCancel = () => {
-    onCancel?.();
-    resetForm();
-  };
-
-  const handleSave = () => {
-    onSave?.({
-      level1: selectedLevel1,
-      level2: selectedLevel2,
-      level3: selectedLevel3,
-      comment,
-    });
-    resetForm();
-  };
+  const level2Categories =
+      categories.find(c => c.id === level1)?.children || [];
+  const level3Categories =
+      level2Categories.find(c => c.id === level2)?.children || [];
 
   return (
       <div className="form-container">
         <div className="row">
           <div className="field">
             <label htmlFor="level1">Level 1 Category</label>
-            <select id="level1" value={selectedLevel1} onChange={handleLevel1Change}>
+            <select id="level1" value={level1} onChange={e => {
+              setLevel1(e.target.value);
+              setLevel2(""); setLevel3("");
+            }}>
               <option value="">Select Category</option>
               {categories.map(cat => (
                   <option key={cat.id} value={cat.id}>{cat.name}</option>
@@ -97,9 +47,9 @@ export const ContactEntryForm: React.FC<ContactEntryFormProps> = ({
             <label htmlFor="level2">Level 2 Category</label>
             <select
                 id="level2"
-                value={selectedLevel2}
-                onChange={handleLevel2Change}
-                disabled={!selectedLevel1 || level2Categories.length === 0}
+                value={level2}
+                onChange={e => { setLevel2(e.target.value); setLevel3(""); }}
+                disabled={!level1 || level2Categories.length === 0}
             >
               <option value="">Select Category</option>
               {level2Categories.map(cat => (
@@ -111,9 +61,9 @@ export const ContactEntryForm: React.FC<ContactEntryFormProps> = ({
             <label htmlFor="level3">Level 3 Category</label>
             <select
                 id="level3"
-                value={selectedLevel3}
-                onChange={handleLevel3Change}
-                disabled={!selectedLevel2 || level3Categories.length === 0}
+                value={level3}
+                onChange={e => setLevel3(e.target.value)}
+                disabled={!level2 || level3Categories.length === 0}
             >
               <option value="">Select Category</option>
               {level3Categories.map(cat => (
@@ -128,80 +78,25 @@ export const ContactEntryForm: React.FC<ContactEntryFormProps> = ({
             <textarea
                 id="comment"
                 value={comment}
-                onChange={handleCommentChange}
+                onChange={e => setComment(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === "Enter" && e.ctrlKey) {
+                    e.preventDefault();
+                    onSave();
+                  }
+                }}
+
             />
           </div>
         </div>
         <div className="buttons">
-          <button type="button" className="cancel" onClick={handleCancel}>Cancel</button>
-          <button type="button" className="save" onClick={handleSave}>Save</button>
+          <button type="button" className="cancel" onClick={onCancel}>Cancel</button>
+          <button type="button" className="save" onClick={onSave}>Save</button>
         </div>
 
         {/* Inline style for demonstration, but you should put this in a .css file */}
         <style>
-          {`
-          .form-container {
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            font-family: Arial, sans-serif;
-            color: #333;
-            display: block;
-          }
-          .row {
-            display: flex;
-            margin-bottom: 16px;
-            gap: 16px;
-          }
-          .field {
-            flex: 1;
-          }
-          label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-          }
-          select {
-            padding: 8px;
-            width: 100%;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-          }
-          textarea {
-            width: 99%;
-            min-height: 100px;
-            resize: vertical;
-            padding: 8px 0 8px 8px;
-            font-family: Arial, sans-serif;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-          }
-          .buttons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-          }
-          button {
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-          }
-          .save, .cancel {
-            font-size: 14px;
-          }
-          .cancel {
-            background-color: #f5f5f5;
-            border: 1px solid #ddd;
-          }
-          .save {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-          }
-        `}
+          {``}
         </style>
       </div>
   );
