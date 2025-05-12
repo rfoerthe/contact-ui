@@ -24,10 +24,6 @@ class ContactEntryForm extends HTMLElement {
 		this.resetForm = this.resetForm.bind(this);
 	}
 
-	static get observedAttributes() {
-		return ["categories"];
-	}
-
 	private _categories: Category[] = [];
 
 	get categories(): Category[] {
@@ -51,37 +47,25 @@ class ContactEntryForm extends HTMLElement {
 		return level2?.children || [];
 	}
 
-	attributeChangedCallback(name: string, _oldValue: string, newValue: string) {
-		if (name === "categories") {
-			try {
-				this.categories = JSON.parse(newValue);
-			} catch {
-			}
-		}
-	}
-
 	connectedCallback() {
 		this.render();
 	}
 
 	handleLevel1Change(e: Event) {
-		const value = (e.target as HTMLSelectElement).value;
-		this.selectedLevel1 = value;
+		this.selectedLevel1 = (e.target as HTMLSelectElement).value;
 		this.selectedLevel2 = '';
 		this.selectedLevel3 = '';
 		this.render();
 	}
 
 	handleLevel2Change(e: Event) {
-		const value = (e.target as HTMLSelectElement).value;
-		this.selectedLevel2 = value;
+		this.selectedLevel2 = (e.target as HTMLSelectElement).value;
 		this.selectedLevel3 = '';
 		this.render();
 	}
 
 	handleLevel3Change(e: Event) {
-		const value = (e.target as HTMLSelectElement).value;
-		this.selectedLevel3 = value;
+		this.selectedLevel3 = (e.target as HTMLSelectElement).value;
 		this.render();
 	}
 

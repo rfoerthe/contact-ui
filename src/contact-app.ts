@@ -1,7 +1,4 @@
 // Vanilla Web Component version of contact-app.ts
-
-// You should have `contact-entry-form` and `contact-display-table` defined as web components.
-
 import {exampleCategories} from './example-categories';
 import './contact-entry-form.ts'
 import './contact-display-table.ts'

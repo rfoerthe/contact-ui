@@ -23,10 +23,6 @@ class ContactDisplayTable extends HTMLElement {
 		this.handleEdit = this.handleEdit.bind(this);
 	}
 
-	static get observedAttributes() {
-		return ["contacts", "categories"];
-	}
-
 	private _contacts: ContactEntry[] = [];
 
 	get contacts(): ContactEntry[] {
@@ -47,20 +43,6 @@ class ContactDisplayTable extends HTMLElement {
 	set categories(value: Category[]) {
 		this._categories = value;
 		this.render();
-	}
-
-	attributeChangedCallback(name: string, _old: string, value: string) {
-		if (name === "contacts") {
-			try {
-				this.contacts = JSON.parse(value);
-			} catch {
-			}
-		} else if (name === "categories") {
-			try {
-				this.categories = JSON.parse(value);
-			} catch {
-			}
-		}
 	}
 
 	connectedCallback() {
