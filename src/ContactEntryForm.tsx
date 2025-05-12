@@ -1,4 +1,4 @@
-import React, { useState, useMemo, type ChangeEvent } from "react";
+import React, {useState, useMemo, type ChangeEvent, useEffect} from "react";
 
 export interface Category {
   id: string;
@@ -23,6 +23,14 @@ export const ContactEntryForm: React.FC<ContactEntryFormProps> = ({
   const [selectedLevel2, setSelectedLevel2] = useState(initialContact?.level2 || "");
   const [selectedLevel3, setSelectedLevel3] = useState(initialContact?.level3 || "");
   const [comment, setComment] = useState(initialContact?.comment || "");
+
+  useEffect(() => {
+    setSelectedLevel1(initialContact?.level1 || "");
+    setSelectedLevel2(initialContact?.level2 || "");
+    setSelectedLevel3(initialContact?.level3 || "");
+    setComment(initialContact?.comment || "");
+  }, [initialContact]);
+
 
   const level2Categories = useMemo(() => {
     return categories.find(cat => cat.id === selectedLevel1)?.children || [];

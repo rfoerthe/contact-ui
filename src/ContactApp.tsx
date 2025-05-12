@@ -13,15 +13,13 @@ export interface ContactEntry {
 }
 
 export const ContactApp: React.FC = () => {
-  const [contacts, setContacts] = useState<ContactEntry[]>([]);
+  const [contacts, setContacts] = useState<ContactEntry[]>(() => {
+    const saved = localStorage.getItem("contacts");
+    return saved ? JSON.parse(saved) : [];
+  });
   const [editContact, setEditContact] = useState<ContactEntry | null>(null);
   const categories: Category[] = exampleCategories;
 
-  // On mount, load contacts from localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem("contacts");
-    if (saved) setContacts(JSON.parse(saved));
-  }, []);
 
   // Save contacts to localStorage whenever changed
   useEffect(() => {
