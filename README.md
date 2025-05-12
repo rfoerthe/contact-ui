@@ -5,14 +5,14 @@ TypeScript, featuring project setup and build processes managed by [Vite](https:
 
 ## Project Structure
 
-contact-lit/ 
-├── public/ # Public static assets 
-├── src/ # Application source code (TypeScript, CSS) 
-│ ├── assets/ # Static assets such as images or icons 
-├── index.html # Main entry point of the application 
-├── package.json # Project and dependency definitions 
-├── package-lock.json # Exact dependency versions 
-├── tsconfig.json # TypeScript configuration
+    contact-lit/ 
+    ├── public/ # Public static assets 
+    ├── src/ # Application source code (TypeScript, CSS) 
+    │ ├── assets/ # Static assets such as images or icons 
+    ├── index.html # Main entry point of the application 
+    ├── package.json # Project and dependency definitions 
+    ├── package-lock.json # Exact dependency versions 
+    ├── tsconfig.json # TypeScript configuration
 
 ## Prerequisites
 
