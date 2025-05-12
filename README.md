@@ -1,7 +1,11 @@
-# contact-lit
+# contact-ui
 
-A contact management proof of concept built with [Lit](https://lit.dev/) and 
-TypeScript, featuring project setup and build processes managed by [Vite](https://vitejs.dev/).
+A contact management proof of concept app built in three configurations
+* with vanilla Web Components
+* with [Lit](https://lit.dev/)
+* with React
+
+and TypeScript featuring project setup and build processes managed by [Vite](https://vitejs.dev/).
 
 ## Project Structure
 
