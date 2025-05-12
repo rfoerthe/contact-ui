@@ -1,6 +1,6 @@
-# contact-lit
+# contact-vanilla-webcomponents
 
-A contact management proof of concept built with [Lit](https://lit.dev/) and 
+A contact management proof of concept built with valla Web Components API and
 TypeScript, featuring project setup and build processes managed by [Vite](https://vitejs.dev/).
 
 ## Project Structure
