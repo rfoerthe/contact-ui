@@ -9,7 +9,7 @@ and TypeScript featuring project setup and build processes managed by [Vite](htt
 
 ## Project Structure
 
-    contact-lit/ 
+    contact-ui/ 
     ├── public/ # Public static assets 
     ├── src/ # Application source code (TypeScript, CSS, TSX) 
     ├── index.html # Main entry point of the application 
@@ -28,7 +28,7 @@ and TypeScript featuring project setup and build processes managed by [Vite](htt
 
    ```bash
    git clone <REPOSITORY_URL>
-   cd contact-lit
+   cd contact-ui
    ```
 
 2. **Install dependencies**
