@@ -9,12 +9,7 @@ interface ContactDisplayTableProps {
 	onEdit: (contact: ContactEntry) => void;
 }
 
-export const ContactDisplayTable: React.FC<ContactDisplayTableProps> = ({
-																																					contacts,
-																																					categories,
-																																					onDelete,
-																																					onEdit,
-																																				}) => {
+export const ContactDisplayTable: React.FC<ContactDisplayTableProps> = ({contacts, categories, onDelete, onEdit,}) => {
 	// Helper: recursively find a category's name by id
 	const getCategoryName = (id: string): string => {
 		const findCategory = (cats: Category[]): string => {
