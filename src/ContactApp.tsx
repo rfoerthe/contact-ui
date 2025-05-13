@@ -85,6 +85,7 @@ export const ContactApp: React.FC = () => {
 	return (
 			<div className="contact-app-root">
 				<h1>Contact Management</h1>
+				<h2 className="sub-title">Based on React, TypeScript and Vite</h2>
 				<ContactEntryForm
 						categories={categories}
 						level1={level1}
