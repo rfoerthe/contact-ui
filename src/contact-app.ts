@@ -48,10 +48,18 @@ class ContactApp extends HTMLElement {
           padding: 20px;
         }
         h1 {
-          color: #333;
-        }
+    		color: #333;
+    		margin-bottom: 10px;
+		}
+		h2.sub-title {
+			color: #333;
+			font-size: 14px;
+			font-style: italic;
+		}
       </style>
       <h1>Contact Management</h1>
+      <h2 class="sub-title">Based on vanilla Web Components, TypeScript and Vite</h2>
+
       <contact-entry-form></contact-entry-form>
       <contact-display-table></contact-display-table>
     `;
