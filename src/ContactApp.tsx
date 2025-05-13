@@ -5,7 +5,7 @@ import {exampleCategories} from "./example-categories";
 import type {Category, ContactEntry} from "./types.ts";
 import './ContactApp.css';
 
-export const ContactApp: React.FC = () => {
+const ContactApp: React.FC = () => {
 	const [contacts, setContacts] = useState<ContactEntry[]>(() => {
 		const saved = localStorage.getItem("contacts");
 		return saved ? JSON.parse(saved) : [];
@@ -107,3 +107,5 @@ export const ContactApp: React.FC = () => {
 			</div>
 	);
 };
+
+export default ContactApp;

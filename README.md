@@ -5,14 +5,14 @@ A contact management proof of concept app built in three configurations:
 * with [Lit](https://lit.dev/)
 * with React
 
-and TypeScript featuring project setup and build processes managed by [Vite](https://vitejs.dev/).
+and TypeScript featuring project setup and build processes managed by [Rsbuild](https://rsbuild.dev/).
 
 ## Project Structure
 
-    contact-lit/ 
+    contact-ui/ 
     ├── public/ # Public static assets 
     ├── src/ # Application source code (TypeScript, CSS, TSX) 
-    ├── index.html # Main entry point of the application 
+    ├── src/index.tsx # Application entry point 
     ├── package.json # Project and dependency definitions 
     ├── package-lock.json # Exact dependency versions 
     ├── tsconfig.json # TypeScript configuration
@@ -28,7 +28,7 @@ and TypeScript featuring project setup and build processes managed by [Vite](htt
 
    ```bash
    git clone <REPOSITORY_URL>
-   cd contact-lit
+   cd contact-ui
    ```
 
 2. **Install dependencies**
@@ -41,7 +41,7 @@ and TypeScript featuring project setup and build processes managed by [Vite](htt
 
 - **Start development server**
 
-  Launches a local server with hot-reload at [http://localhost:5173](http://localhost:5173):
+  Launches a local server with hot-reload at [http://localhost:3000](http://localhost:3000):
 
    ```bash
    npm run dev
@@ -74,6 +74,7 @@ Indentation is automatically handled by most modern editors. Alternatively, you 
 
 - [Lit Documentation](https://lit.dev/docs/)
 - [Vite Documentation](https://vitejs.dev/guide/)
+- [Rsbuild Documentation](https://rsbuild.dev/)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 - [React Documentation](https://react.dev/)
 
