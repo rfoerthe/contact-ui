@@ -29,9 +29,15 @@ export class ContactApp extends LitElement {
       margin: 0 auto;
       padding: 20px;
     }
-    h1 {
-      color: #333;
-    }
+	h1 {
+	  color: #333;
+	  margin-bottom: 10px;
+	}
+	h2.sub-title {
+	  color: #333;
+	  font-size: 14px;
+	  font-style: italic;
+	}
   `;
 
   @state()
@@ -77,6 +83,7 @@ export class ContactApp extends LitElement {
   render() {
     return html`
       <h1>Contact Management</h1>
+	  <h2 class="sub-title">Based on Lit, TypeScript and Vite</h2>
       <contact-entry-form
         .categories=${this.categories}
         @save=${this.handleSave}
