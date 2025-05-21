@@ -40,10 +40,11 @@ export class ContactApp extends LitElement {
 	}
   `;
 
+  static categories: Category[] = exampleCategories;
+
   @state()
   private contacts: ContactEntry[] = [];
 
-  categories: Category[] = exampleCategories;
 
   firstUpdated() {
     // Load contacts from localStorage
@@ -85,12 +86,12 @@ export class ContactApp extends LitElement {
       <h1>Contact Management</h1>
 	  <h2 class="sub-title">Based on Lit, TypeScript and Vite</h2>
       <contact-entry-form
-        .categories=${this.categories}
+        .categories=${ContactApp.categories}
         @save=${this.handleSave}
       ></contact-entry-form>
       <contact-display-table
         .contacts=${this.contacts}
-        .categories=${this.categories}
+        .categories=${ContactApp.categories}
         @delete-contact=${this.handleDelete}
         @edit-contact=${this.handleEdit}
       ></contact-display-table>
