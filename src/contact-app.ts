@@ -20,7 +20,7 @@ interface ContactEntry {
 
 class ContactApp extends HTMLElement {
 	private contacts: ContactEntry[] = [];
-	private categories: Category[] = exampleCategories;
+	private static categories: Category[] = exampleCategories;
 
 	constructor() {
 		super();
@@ -66,12 +66,12 @@ class ContactApp extends HTMLElement {
 
 		// Pass categories and contacts to the forms/tables (ensure web components receive data)
 		const form = this.shadowRoot.querySelector('contact-entry-form') as any;
-		if (form) form.categories = this.categories;
+		if (form) form.categories = ContactApp.categories;
 
 		const table = this.shadowRoot.querySelector('contact-display-table') as any;
 		if (table) {
 			table.contacts = this.contacts;
-			table.categories = this.categories;
+			table.categories = ContactApp.categories;
 		}
 	}
 
