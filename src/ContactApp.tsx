@@ -12,32 +12,8 @@ export const ContactApp: React.FC = () => {
 	});
 	const categories: Category[] = exampleCategories;
 
-	// form state
-	const [level1, setLevel1] = useState<string>("");
-	const [level2, setLevel2] = useState<string>("");
-	const [level3, setLevel3] = useState<string>("");
-	const [comment, setComment] = useState<string>("");
 
 	const [editContact, setEditContact] = useState<ContactEntry | null>(null);
-
-	const clearContactEntryState = (): void => {
-		setLevel1("");
-		setLevel2("");
-		setLevel3("");
-		setComment("");
-	}
-
-	// copy values, when entering edit mode
-	React.useEffect(() => {
-		if (editContact) {
-			setLevel1(editContact.level1 || "");
-			setLevel2(editContact.level2 || "");
-			setLevel3(editContact.level3 || "");
-			setComment(editContact.comment || "");
-		} else {
-			clearContactEntryState();
-		}
-	}, [editContact]);
 
 
 	// Save contacts to localStorage whenever changed
@@ -45,11 +21,11 @@ export const ContactApp: React.FC = () => {
 		localStorage.setItem("contacts", JSON.stringify(contacts));
 	}, [contacts]);
 
-	const handleSave = () => {
+	const handleSave = (contactEntry: ContactEntry) => {
 		let newContact: ContactEntry;
 		if (editContact) {
 			newContact = {
-				level1, level2, level3, comment,
+				...contactEntry,
 				id: editContact.id,
 				timestamp: editContact.timestamp,
 			};
@@ -59,13 +35,12 @@ export const ContactApp: React.FC = () => {
 			setEditContact(null);
 		} else {
 			newContact = {
-				level1, level2, level3, comment,
+				...contactEntry,
 				id: Date.now().toString(),
 				timestamp: Date.now(),
 			};
 			setContacts(prev => [...prev, newContact]);
 		}
-		clearContactEntryState();
 	};
 
 	const handleEdit = (contact: ContactEntry) => {
@@ -79,6 +54,11 @@ export const ContactApp: React.FC = () => {
 	};
 
 	const handleCancel = () => {
+		if (editContact) {
+			setContacts(prev =>
+				[...prev.filter(c => c.id !== editContact.id), editContact]
+			);
+		}
 		setEditContact(null);
 	};
 
@@ -88,16 +68,9 @@ export const ContactApp: React.FC = () => {
 				<h2 className="sub-title">Based on React, TypeScript and Vite</h2>
 				<ContactEntryForm
 						categories={categories}
-						level1={level1}
-						setLevel1={setLevel1}
-						level2={level2}
-						setLevel2={setLevel2}
-						level3={level3}
-						setLevel3={setLevel3}
-						comment={comment}
-						setComment={setComment}
 						onSave={handleSave}
 						onCancel={handleCancel}
+						editContact={editContact}
 				/>
 				<ContactDisplayTable
 						contacts={contacts}
