@@ -108,6 +108,10 @@ class ContactDisplayTable extends HTMLElement {
           border-bottom: 2px solid #ddd;
         }
         
+        th.actions-head {
+      		width: 110px;
+    	}
+        
         td {
           padding: 10px;
           border-bottom: 1px solid #ddd;
@@ -161,14 +165,14 @@ class ContactDisplayTable extends HTMLElement {
       <div class="table-container">
         <h2>Contact Entries</h2>
         ${this.contacts.length === 0
-				? `<div class="empty-state">No contact entries yet. Use the form to add some.</div>`
-				: `
+			? `<div class="empty-state">No contact entries yet. Use the form to add some.</div>`
+			: `
           <table>
             <thead>
               <tr>
                 <th>Category</th>
                 <th>Comment</th>
-                <th>Actions</th>
+                <th class="actions-head">Actions</th>
               </tr>
             </thead>
             <tbody>
