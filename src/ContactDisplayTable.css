@@ -42,6 +42,9 @@ td {
     color: #888;
     font-style: italic;
 }
+.edit {
+    background-color: #f6e0b6;
+}
 .actions {
     display: flex;
     gap: 8px;

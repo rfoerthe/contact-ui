@@ -5,11 +5,12 @@ import './ContactDisplayTable.css';
 interface ContactDisplayTableProps {
 	contacts: ContactEntry[];
 	categories: Category[];
+	editContactId?: string | null;
 	onDelete: (id: string) => void;
 	onEdit: (contact: ContactEntry) => void;
 }
 
-export const ContactDisplayTable: React.FC<ContactDisplayTableProps> = ({contacts, categories, onDelete, onEdit,}) => {
+export const ContactDisplayTable: React.FC<ContactDisplayTableProps> = ({contacts, categories, editContactId, onDelete, onEdit,}) => {
 	// Helper: recursively find a category's name by id
 	const getCategoryName = (id: string): string => {
 		const findCategory = (cats: Category[]): string => {
@@ -51,8 +52,10 @@ export const ContactDisplayTable: React.FC<ContactDisplayTableProps> = ({contact
 							</tr>
 							</thead>
 							<tbody>
-							{contacts.map((contact) => (
-									<tr key={contact.id}>
+							{[...contacts]
+								.sort((a, b) => (a.timestamp ?? 0) - (b.timestamp ?? 0))
+								.map((contact) => (
+									<tr key={contact.id} className={editContactId === contact.id ? "edit" : ""}>
 										<td className="category-path">{getCategoryPath(contact)}</td>
 										<td className="comment">{contact.comment}</td>
 										<td>

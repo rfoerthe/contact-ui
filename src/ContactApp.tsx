@@ -28,8 +28,7 @@ export const ContactApp: React.FC = () => {
 				id: editContact.id,
 				timestamp: editContact.timestamp,
 			};
-			setContacts(prev =>
-					[...prev.filter(c => c.id !== newContact.id), newContact]
+			setContacts(prev => [...prev.filter(c => c.id !== newContact.id), newContact]
 			);
 			setEditContact(null);
 		} else {
@@ -44,11 +43,10 @@ export const ContactApp: React.FC = () => {
 
 	const handleEdit = (contact: ContactEntry) => {
 		setEditContact(contact);
-		// Remove contact
-		setContacts(prev => prev.filter(c => c.id !== contact.id));
 	};
 
 	const handleDelete = (id: string) => {
+		setEditContact(null);
 		setContacts(prev => prev.filter(contact => contact.id !== id));
 	};
 
@@ -75,6 +73,7 @@ export const ContactApp: React.FC = () => {
 				<ContactDisplayTable
 						contacts={contacts}
 						categories={categories}
+						editContactId={editContact?.id}
 						onDelete={handleDelete}
 						onEdit={handleEdit}
 				/>
