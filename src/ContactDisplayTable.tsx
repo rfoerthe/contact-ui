@@ -1,5 +1,5 @@
 import React from "react";
-import type {Category, ContactEntry} from "./types.ts";
+import type {Category, ContactEntry} from "./types";
 import './ContactDisplayTable.css';
 
 interface ContactDisplayTableProps {

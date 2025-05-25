@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import type {Category, ContactEntry} from "./types.ts";
+import type {Category, ContactEntry} from "./types";
 import './ContactEntryForm.css';
 
 interface ContactEntryFormProps {
