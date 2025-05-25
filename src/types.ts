@@ -1,14 +1,14 @@
 export interface ContactEntry {
-	level1: string;
-	level2: string;
-	level3: string;
-	comment: string;
-	id?: string;
-	timestamp?: number;
+    level1: string;
+    level2: string;
+    level3: string;
+    comment: string;
+    id?: string;
+    timestamp?: number;
 }
 
 export interface Category {
-	id: string;
-	name: string;
-	children?: Category[];
+    id: string;
+    name: string;
+    children?: Category[];
 }

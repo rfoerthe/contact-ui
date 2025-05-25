@@ -55,7 +55,6 @@ export const ContactEntryForm: React.FC<ContactEntryFormProps> = ({categories, o
     }, [editContact]);
 
 
-
     return (
         <div className="form-container">
             <div className="row">
@@ -125,11 +124,6 @@ export const ContactEntryForm: React.FC<ContactEntryFormProps> = ({categories, o
                 <button type="button" className="cancel" onClick={onCancel}>Cancel</button>
                 <button type="button" className="save" onClick={saveContactEntry}>Save</button>
             </div>
-
-            {/* Inline style for demonstration, but you should put this in a .css file */}
-            <style>
-                {``}
-            </style>
         </div>
     );
 };
