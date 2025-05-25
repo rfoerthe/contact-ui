@@ -24,6 +24,9 @@ th {
     font-weight: bold;
     border-bottom: 2px solid #ddd;
 }
+th.actions-head {
+    width: 110px;
+}
 td {
     padding: 10px;
     border-bottom: 1px solid #ddd;

@@ -48,7 +48,7 @@ export const ContactDisplayTable: React.FC<ContactDisplayTableProps> = ({contact
 							<tr>
 								<th>Category</th>
 								<th>Comment</th>
-								<th>Actions</th>
+								<th className="actions-head">Actions</th>
 							</tr>
 							</thead>
 							<tbody>
