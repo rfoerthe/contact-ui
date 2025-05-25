@@ -11,6 +11,8 @@ class ContactEntryForm extends HTMLElement {
     private selectedLevel2: string = '';
     private selectedLevel3: string = '';
     private comment: string = '';
+    private contactId: String | undefined = undefined;
+    private timestamp: number | undefined = undefined;
 
     constructor() {
         super();
@@ -73,16 +75,28 @@ class ContactEntryForm extends HTMLElement {
         this.comment = (e.target as HTMLTextAreaElement).value;
     }
 
-    async loadContact(contact: { level1: string, level2: string, level3: string, comment: string }) {
+    async loadContact(contact: { level1: string, level2: string, level3: string, comment: string, id?: string, timestamp?: number }) {
         this.selectedLevel1 = contact.level1;
         this.selectedLevel2 = contact.level2;
         this.selectedLevel3 = contact.level3;
         this.comment = contact.comment;
+        this.contactId = contact.id
+        this.timestamp = contact.timestamp;
         this.render();
     }
 
     handleCancel() {
-        this.dispatchEvent(new CustomEvent('cancel', {bubbles: true, composed: true}));
+        const formData = {
+            level1: this.selectedLevel1,
+            level2: this.selectedLevel2,
+            level3: this.selectedLevel3,
+            comment: this.comment,
+            id: this.contactId,
+            timestamp: this.timestamp,
+        };
+        this.dispatchEvent(new CustomEvent('cancel', {
+            detail: formData,
+            bubbles: true, composed: true}));
         this.resetForm();
     }
 
@@ -91,7 +105,9 @@ class ContactEntryForm extends HTMLElement {
             level1: this.selectedLevel1,
             level2: this.selectedLevel2,
             level3: this.selectedLevel3,
-            comment: this.comment
+            comment: this.comment,
+            id: this.contactId,
+            timestamp: this.timestamp,
         };
         this.dispatchEvent(new CustomEvent('save', {
             detail: formData,

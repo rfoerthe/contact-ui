@@ -28,6 +28,7 @@ class ContactApp extends HTMLElement {
 		this.handleSave = this.handleSave.bind(this);
 		this.handleDelete = this.handleDelete.bind(this);
 		this.handleEdit = this.handleEdit.bind(this);
+		this.handleEditCancel = this.handleEditCancel.bind(this);
 	}
 
 	connectedCallback() {
@@ -97,11 +98,16 @@ class ContactApp extends HTMLElement {
 	private handleSave(e: Event) {
 		const customEvent = e as CustomEvent;
 		const contactData = customEvent.detail;
-		const newContact: ContactEntry = {
-			...contactData,
-			id: Date.now().toString(),
-			timestamp: Date.now()
-		};
+		let newContact: ContactEntry;
+		if (contactData.id) {
+			newContact = {...contactData};
+		} else {
+			newContact = {
+				...contactData,
+				id: Date.now().toString(),
+				timestamp: Date.now()
+			};
+		}
 		this.contacts = [...this.contacts, newContact];
 		this.saveContacts();
 	}
@@ -125,11 +131,23 @@ class ContactApp extends HTMLElement {
 		}
 	}
 
+	private handleEditCancel(e: Event) {
+		const customEvent = e as CustomEvent;
+		const cancelContact = customEvent.detail;
+		if (cancelContact.id) {
+			this.contacts = [...this.contacts.filter(contact => contact.id !== cancelContact.id), cancelContact];
+			this.saveContacts();
+		}
+	}
+
+
 	private attachEvents() {
 		const form = this.shadowRoot?.querySelector('contact-entry-form');
 		const table = this.shadowRoot?.querySelector('contact-display-table');
 		form?.removeEventListener('save', this.handleSave); // Prevent double binding
 		form?.addEventListener('save', this.handleSave);
+		form?.removeEventListener('cancel', this.handleEditCancel); // Prevent double binding
+		form?.addEventListener('cancel', this.handleEditCancel);
 
 		table?.removeEventListener('delete-contact', this.handleDelete);
 		table?.removeEventListener('edit-contact', this.handleEdit);
