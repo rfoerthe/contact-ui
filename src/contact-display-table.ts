@@ -53,6 +53,10 @@ export class ContactDisplayTable extends LitElement {
       font-weight: bold;
       border-bottom: 2px solid #ddd;
     }
+    
+    th.actions-head {
+      width: 110px;
+    }
 
     td {
       padding: 10px;
@@ -176,7 +180,7 @@ export class ContactDisplayTable extends LitElement {
                 <tr>
                   <th>Category</th>
                   <th>Comment</th>
-                  <th>Actions</th>
+                  <th class="actions-head">Actions</th>
                 </tr>
               </thead>
               <tbody>
