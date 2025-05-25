@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import {customElement, property, state} from 'lit/decorators.js';
+import {customElement, property} from 'lit/decorators.js';
 
 
 interface ContactEntry {
@@ -111,12 +111,8 @@ export class ContactDisplayTable extends LitElement {
   @property({ type: Array })
   categories: Category[] = [];
 
-  @state()
-  editContactId: string | undefined = undefined;
-
-  public async resetEdit() {
-    this.editContactId = undefined;
-  }
+  @property({type: String})
+  editContactId?: string;
 
   // Helper method to find category name by id
   private getCategoryName(id: string): string {
@@ -157,14 +153,13 @@ export class ContactDisplayTable extends LitElement {
   private handleDelete(contact: ContactEntry) {
     const id = contact.id || ""
     this.dispatchEvent(new CustomEvent('delete-contact', {
-      detail: { id }
+      detail: id
     }));
   }
 
   private handleEdit(contact: ContactEntry) {
-    this.editContactId = contact.id;
     this.dispatchEvent(new CustomEvent('edit-contact', {
-      detail: { contact }
+      detail: contact
     }));
   }
 

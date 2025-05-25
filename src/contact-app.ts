@@ -45,6 +45,8 @@ export class ContactApp extends LitElement {
   @state()
   private contacts: ContactEntry[] = [];
 
+  @state()
+  private editContactId?: string = undefined;
 
   firstUpdated() {
     // Load contacts from localStorage
@@ -66,29 +68,28 @@ export class ContactApp extends LitElement {
         timestamp: Date.now()
       };
     }
-    const contactTable = this.renderRoot?.querySelector('contact-display-table');
-    contactTable?.resetEdit();
+    this.editContactId = undefined;
     this.contacts = [...this.contacts.filter(contact => contact.id !== newContact.id), newContact];
     localStorage.setItem('contacts', JSON.stringify(this.contacts));
   }
 
   private handleCancel() {
-    const contactTable = this.renderRoot?.querySelector('contact-display-table');
-    contactTable?.resetEdit();
+    this.editContactId = undefined;
   }
 
 
   private handleDelete(e: CustomEvent) {
-    const { id } = e.detail;
+    const id = e.detail;
     this.contacts = this.contacts.filter(contact => contact.id !== id);
     localStorage.setItem('contacts', JSON.stringify(this.contacts));
   }
 
   private handleEdit(e: CustomEvent) {
-    const { contact } = e.detail;
+    const contact = e.detail;
     // Load contact into the form
     const entryForm = this.renderRoot?.querySelector('contact-entry-form');
     entryForm?.loadContact(contact);
+    this.editContactId = contact.id;
   }
 
   render() {
@@ -103,6 +104,7 @@ export class ContactApp extends LitElement {
       <contact-display-table
         .contacts=${this.contacts}
         .categories=${ContactApp.categories}
+        .editContactId=${this.editContactId}
         @delete-contact=${this.handleDelete}
         @edit-contact=${this.handleEdit}
       ></contact-display-table>
