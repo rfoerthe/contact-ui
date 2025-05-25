@@ -45,6 +45,27 @@ class ContactDisplayTable extends HTMLElement {
 		this.render();
 	}
 
+	private _contactEditId: string = '';
+
+	static get observedAttributes() {
+		return ['contact-edit-id'];
+	}
+
+	get contactEditId(): string {
+		return this._contactEditId;
+	}
+	set contactEditId(val: string) {
+		this._contactEditId = val ?? '';
+		this.setAttribute('contact-edit-id', this._contactEditId);
+	}
+
+	attributeChangedCallback(name: string, _oldValue: string|null, newValue: string|null) {
+		if (name === 'contact-edit-id') {
+			this._contactEditId = newValue || '';
+		}
+	}
+
+
 	connectedCallback() {
 		this.render();
 	}
@@ -109,6 +130,10 @@ class ContactDisplayTable extends HTMLElement {
           font-style: italic;
         }
         
+        .edit {
+        	background-color: bisque;
+        }
+                
         .actions {
           display: flex;
           gap: 8px;
@@ -147,14 +172,16 @@ class ContactDisplayTable extends HTMLElement {
               </tr>
             </thead>
             <tbody>
-              ${this.contacts.map((contact, idx) => `
-                <tr>
+              ${[...this.contacts]
+				.sort((a, b) => (a.timestamp ?? 0) - (b.timestamp ?? 0))
+				.map((contact) => `
+                <tr class="${this.contactEditId === contact.id ? 'edit' : ""}">
                   <td class="category-path">${this.getCategoryPath(contact)}</td>
                   <td class="comment">${contact.comment || ""}</td>
                   <td>
                     <div class="actions">
-                      <button class="edit-btn" type="button" data-idx="${idx}">Edit</button>
-                      <button class="delete-btn" type="button" data-idx="${idx}">Delete</button>
+                      <button class="edit-btn" type="button" data-idx="${contact.id}">Edit</button>
+                      <button class="delete-btn" type="button" data-idx="${contact.id}">Delete</button>
                     </div>
                   </td>
                 </tr>
@@ -198,7 +225,7 @@ class ContactDisplayTable extends HTMLElement {
 	private handleDelete(e: Event) {
 		const idx = (e.target as HTMLButtonElement).dataset.idx;
 		if (idx === undefined) return;
-		const contact = this.contacts[Number(idx)];
+		const contact = this.contacts.find(contact => contact.id === idx);
 		const id = contact?.id || "";
 		this.dispatchEvent(new CustomEvent('delete-contact', {
 			detail: id,
@@ -210,13 +237,15 @@ class ContactDisplayTable extends HTMLElement {
 	private handleEdit(e: Event) {
 		const idx = (e.target as HTMLButtonElement).dataset.idx;
 		if (idx === undefined) return;
-		const contact = this.contacts[Number(idx)];
+		const contact = this.contacts.find(contact => contact.id === idx);
 		if (!contact) return;
+		this.contactEditId = idx;
 		this.dispatchEvent(new CustomEvent('edit-contact', {
 			detail: contact,
 			bubbles: true,
 			composed: true
 		}));
+		this.render();
 	}
 }
 

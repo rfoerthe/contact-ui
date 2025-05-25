@@ -108,7 +108,7 @@ class ContactApp extends HTMLElement {
 				timestamp: Date.now()
 			};
 		}
-		this.contacts = [...this.contacts, newContact];
+		this.contacts = [...this.contacts.filter(contact => contact.id !== newContact.id), newContact];
 		this.saveContacts();
 	}
 
@@ -122,8 +122,7 @@ class ContactApp extends HTMLElement {
 	private handleEdit(e: Event) {
 		const customEvent = e as CustomEvent;
 		const contact = customEvent.detail;
-		this.contacts = this.contacts.filter(c => c.id !== contact.id);
-		this.saveContacts();
+		// this.saveContacts();
 		// Load contact into the form
 		const form = (this.shadowRoot?.querySelector('contact-entry-form') as any);
 		if (form && typeof form.loadContact === 'function') {
@@ -131,13 +130,9 @@ class ContactApp extends HTMLElement {
 		}
 	}
 
-	private handleEditCancel(e: Event) {
-		const customEvent = e as CustomEvent;
-		const cancelContact = customEvent.detail;
-		if (cancelContact.id) {
-			this.contacts = [...this.contacts.filter(contact => contact.id !== cancelContact.id), cancelContact];
-			this.saveContacts();
-		}
+	private handleEditCancel() {
+		this.render();
+		this.attachEvents();
 	}
 
 
