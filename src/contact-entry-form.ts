@@ -1,116 +1,116 @@
 // Vanilla Web Component version of contact-entry-form.ts
 
 interface Category {
-	id: string;
-	name: string;
-	children?: Category[];
+    id: string;
+    name: string;
+    children?: Category[];
 }
 
 class ContactEntryForm extends HTMLElement {
-	private selectedLevel1: string = '';
-	private selectedLevel2: string = '';
-	private selectedLevel3: string = '';
-	private comment: string = '';
+    private selectedLevel1: string = '';
+    private selectedLevel2: string = '';
+    private selectedLevel3: string = '';
+    private comment: string = '';
 
-	constructor() {
-		super();
-		this.attachShadow({mode: 'open'});
-		this.handleLevel1Change = this.handleLevel1Change.bind(this);
-		this.handleLevel2Change = this.handleLevel2Change.bind(this);
-		this.handleLevel3Change = this.handleLevel3Change.bind(this);
-		this.handleCommentChange = this.handleCommentChange.bind(this);
-		this.handleCancel = this.handleCancel.bind(this);
-		this.handleSave = this.handleSave.bind(this);
-		this.resetForm = this.resetForm.bind(this);
-	}
+    constructor() {
+        super();
+        this.attachShadow({mode: 'open'});
+        this.handleLevel1Change = this.handleLevel1Change.bind(this);
+        this.handleLevel2Change = this.handleLevel2Change.bind(this);
+        this.handleLevel3Change = this.handleLevel3Change.bind(this);
+        this.handleCommentChange = this.handleCommentChange.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
+        this.handleSave = this.handleSave.bind(this);
+        this.resetForm = this.resetForm.bind(this);
+    }
 
-	private _categories: Category[] = [];
+    private _categories: Category[] = [];
 
-	get categories(): Category[] {
-		return this._categories;
-	}
+    get categories(): Category[] {
+        return this._categories;
+    }
 
-	set categories(value: Category[]) {
-		this._categories = value;
-		this.render();
-	}
+    set categories(value: Category[]) {
+        this._categories = value;
+        this.render();
+    }
 
-	get level2Categories(): Category[] {
-		if (!this.selectedLevel1) return [];
-		const level1 = this.categories.find(cat => cat.id === this.selectedLevel1);
-		return level1?.children || [];
-	}
+    get level2Categories(): Category[] {
+        if (!this.selectedLevel1) return [];
+        const level1 = this.categories.find(cat => cat.id === this.selectedLevel1);
+        return level1?.children || [];
+    }
 
-	get level3Categories(): Category[] {
-		if (!this.selectedLevel2) return [];
-		const level2 = this.level2Categories.find(cat => cat.id === this.selectedLevel2);
-		return level2?.children || [];
-	}
+    get level3Categories(): Category[] {
+        if (!this.selectedLevel2) return [];
+        const level2 = this.level2Categories.find(cat => cat.id === this.selectedLevel2);
+        return level2?.children || [];
+    }
 
-	connectedCallback() {
-		this.render();
-	}
+    connectedCallback() {
+        this.render();
+    }
 
-	handleLevel1Change(e: Event) {
-		this.selectedLevel1 = (e.target as HTMLSelectElement).value;
-		this.selectedLevel2 = '';
-		this.selectedLevel3 = '';
-		this.render();
-	}
+    handleLevel1Change(e: Event) {
+        this.selectedLevel1 = (e.target as HTMLSelectElement).value;
+        this.selectedLevel2 = '';
+        this.selectedLevel3 = '';
+        this.render();
+    }
 
-	handleLevel2Change(e: Event) {
-		this.selectedLevel2 = (e.target as HTMLSelectElement).value;
-		this.selectedLevel3 = '';
-		this.render();
-	}
+    handleLevel2Change(e: Event) {
+        this.selectedLevel2 = (e.target as HTMLSelectElement).value;
+        this.selectedLevel3 = '';
+        this.render();
+    }
 
-	handleLevel3Change(e: Event) {
-		this.selectedLevel3 = (e.target as HTMLSelectElement).value;
-		this.render();
-	}
+    handleLevel3Change(e: Event) {
+        this.selectedLevel3 = (e.target as HTMLSelectElement).value;
+        this.render();
+    }
 
-	handleCommentChange(e: Event) {
-		this.comment = (e.target as HTMLTextAreaElement).value;
-	}
+    handleCommentChange(e: Event) {
+        this.comment = (e.target as HTMLTextAreaElement).value;
+    }
 
-	async loadContact(contact: { level1: string, level2: string, level3: string, comment: string }) {
-		this.selectedLevel1 = contact.level1;
-		this.selectedLevel2 = contact.level2;
-		this.selectedLevel3 = contact.level3;
-		this.comment = contact.comment;
-		this.render();
-	}
+    async loadContact(contact: { level1: string, level2: string, level3: string, comment: string }) {
+        this.selectedLevel1 = contact.level1;
+        this.selectedLevel2 = contact.level2;
+        this.selectedLevel3 = contact.level3;
+        this.comment = contact.comment;
+        this.render();
+    }
 
-	handleCancel() {
-		this.dispatchEvent(new CustomEvent('cancel', {bubbles: true, composed: true}));
-		this.resetForm();
-	}
+    handleCancel() {
+        this.dispatchEvent(new CustomEvent('cancel', {bubbles: true, composed: true}));
+        this.resetForm();
+    }
 
-	handleSave() {
-		const formData = {
-			level1: this.selectedLevel1,
-			level2: this.selectedLevel2,
-			level3: this.selectedLevel3,
-			comment: this.comment
-		};
-		this.dispatchEvent(new CustomEvent('save', {
-			detail: formData,
-			bubbles: true, composed: true,
-		}));
-		this.resetForm();
-	}
+    handleSave() {
+        const formData = {
+            level1: this.selectedLevel1,
+            level2: this.selectedLevel2,
+            level3: this.selectedLevel3,
+            comment: this.comment
+        };
+        this.dispatchEvent(new CustomEvent('save', {
+            detail: formData,
+            bubbles: true, composed: true,
+        }));
+        this.resetForm();
+    }
 
-	resetForm() {
-		this.selectedLevel1 = '';
-		this.selectedLevel2 = '';
-		this.selectedLevel3 = '';
-		this.comment = '';
-		this.render();
-	}
+    resetForm() {
+        this.selectedLevel1 = '';
+        this.selectedLevel2 = '';
+        this.selectedLevel3 = '';
+        this.comment = '';
+        this.render();
+    }
 
-	render() {
-		if (!this.shadowRoot) return;
-		this.shadowRoot.innerHTML = `
+    render() {
+        if (!this.shadowRoot) return;
+        this.shadowRoot.innerHTML = `
     <style>
       :host {
         display: block;
@@ -178,8 +178,8 @@ class ContactEntryForm extends HTMLElement {
           <select id="level1">
             <option value="">Select Category</option>
             ${this.categories.map(cat =>
-				`<option value="${cat.id}" ${cat.id === this.selectedLevel1 ? 'selected' : ''}>${cat.name}</option>`
-		).join('')}
+            `<option value="${cat.id}" ${cat.id === this.selectedLevel1 ? 'selected' : ''}>${cat.name}</option>`
+        ).join('')}
           </select>
         </div>
         <div class="field">
@@ -187,8 +187,8 @@ class ContactEntryForm extends HTMLElement {
           <select id="level2" ${!this.selectedLevel1 || this.level2Categories.length === 0 ? 'disabled' : ''}>
             <option value="">Select Category</option>
             ${this.level2Categories.map(cat =>
-				`<option value="${cat.id}" ${cat.id === this.selectedLevel2 ? 'selected' : ''}>${cat.name}</option>`
-		).join('')}
+            `<option value="${cat.id}" ${cat.id === this.selectedLevel2 ? 'selected' : ''}>${cat.name}</option>`
+        ).join('')}
           </select>
         </div>
         <div class="field">
@@ -196,8 +196,8 @@ class ContactEntryForm extends HTMLElement {
           <select id="level3" ${!this.selectedLevel2 || this.level3Categories.length === 0 ? 'disabled' : ''}>
             <option value="">Select Category</option>
             ${this.level3Categories.map(cat =>
-				`<option value="${cat.id}" ${cat.id === this.selectedLevel3 ? 'selected' : ''}>${cat.name}</option>`
-		).join('')}
+            `<option value="${cat.id}" ${cat.id === this.selectedLevel3 ? 'selected' : ''}>${cat.name}</option>`
+        ).join('')}
           </select>
         </div>
       </div>
@@ -214,23 +214,23 @@ class ContactEntryForm extends HTMLElement {
     </div>
     `;
 
-		// Events (re-add after render)
-		const shadow = this.shadowRoot;
-		if (!shadow) return;
+        // Events (re-add after render)
+        const shadow = this.shadowRoot;
+        if (!shadow) return;
 
-		shadow.getElementById('level1')?.addEventListener('change', this.handleLevel1Change);
-		shadow.getElementById('level2')?.addEventListener('change', this.handleLevel2Change);
-		shadow.getElementById('level3')?.addEventListener('change', this.handleLevel3Change);
-		shadow.getElementById('comment')?.addEventListener('input', this.handleCommentChange);
-		shadow.querySelector('.cancel')?.addEventListener('click', this.handleCancel);
-		shadow.querySelector('.save')?.addEventListener('click', this.handleSave);
-	}
+        shadow.getElementById('level1')?.addEventListener('change', this.handleLevel1Change);
+        shadow.getElementById('level2')?.addEventListener('change', this.handleLevel2Change);
+        shadow.getElementById('level3')?.addEventListener('change', this.handleLevel3Change);
+        shadow.getElementById('comment')?.addEventListener('input', this.handleCommentChange);
+        shadow.querySelector('.cancel')?.addEventListener('click', this.handleCancel);
+        shadow.querySelector('.save')?.addEventListener('click', this.handleSave);
+    }
 }
 
 customElements.define('contact-entry-form', ContactEntryForm);
 
 declare global {
-	interface HTMLElementTagNameMap {
-		'contact-entry-form': ContactEntryForm;
-	}
+    interface HTMLElementTagNameMap {
+        'contact-entry-form': ContactEntryForm;
+    }
 }

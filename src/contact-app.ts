@@ -108,14 +108,14 @@ class ContactApp extends HTMLElement {
 
 	private handleDelete(e: Event) {
 		const customEvent = e as CustomEvent;
-		const {id} = customEvent.detail;
+		const id = customEvent.detail;
 		this.contacts = this.contacts.filter(contact => contact.id !== id);
 		this.saveContacts();
 	}
 
 	private handleEdit(e: Event) {
 		const customEvent = e as CustomEvent;
-		const {contact} = customEvent.detail;
+		const contact = customEvent.detail;
 		this.contacts = this.contacts.filter(c => c.id !== contact.id);
 		this.saveContacts();
 		// Load contact into the form

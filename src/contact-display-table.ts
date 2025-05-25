@@ -201,7 +201,7 @@ class ContactDisplayTable extends HTMLElement {
 		const contact = this.contacts[Number(idx)];
 		const id = contact?.id || "";
 		this.dispatchEvent(new CustomEvent('delete-contact', {
-			detail: {id},
+			detail: id,
 			bubbles: true,
 			composed: true
 		}));
@@ -213,7 +213,7 @@ class ContactDisplayTable extends HTMLElement {
 		const contact = this.contacts[Number(idx)];
 		if (!contact) return;
 		this.dispatchEvent(new CustomEvent('edit-contact', {
-			detail: {contact},
+			detail: contact,
 			bubbles: true,
 			composed: true
 		}));
