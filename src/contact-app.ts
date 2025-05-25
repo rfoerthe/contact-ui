@@ -56,14 +56,27 @@ export class ContactApp extends LitElement {
 
   private handleSave(e: CustomEvent) {
     const contactData = e.detail;
-    const newContact: ContactEntry = {
-      ...contactData,
-      id: Date.now().toString(),
-      timestamp: Date.now()
-    };
-    this.contacts = [...this.contacts, newContact];
+    let newContact: ContactEntry;
+    if (contactData.id) {
+      newContact = {...contactData};
+    } else {
+      newContact = {
+        ...contactData,
+        id: Date.now().toString(),
+        timestamp: Date.now()
+      };
+    }
+    const contactTable = this.renderRoot?.querySelector('contact-display-table');
+    contactTable?.resetEdit();
+    this.contacts = [...this.contacts.filter(contact => contact.id !== newContact.id), newContact];
     localStorage.setItem('contacts', JSON.stringify(this.contacts));
   }
+
+  private handleCancel() {
+    const contactTable = this.renderRoot?.querySelector('contact-display-table');
+    contactTable?.resetEdit();
+  }
+
 
   private handleDelete(e: CustomEvent) {
     const { id } = e.detail;
@@ -73,9 +86,6 @@ export class ContactApp extends LitElement {
 
   private handleEdit(e: CustomEvent) {
     const { contact } = e.detail;
-    // Remove the contact to be edited
-    this.contacts = this.contacts.filter(c => c.id !== contact.id);
-    localStorage.setItem('contacts', JSON.stringify(this.contacts));
     // Load contact into the form
     const entryForm = this.renderRoot?.querySelector('contact-entry-form');
     entryForm?.loadContact(contact);
@@ -88,6 +98,7 @@ export class ContactApp extends LitElement {
       <contact-entry-form
         .categories=${ContactApp.categories}
         @save=${this.handleSave}
+        @cancel=${this.handleCancel}
       ></contact-entry-form>
       <contact-display-table
         .contacts=${this.contacts}

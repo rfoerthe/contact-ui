@@ -98,6 +98,12 @@ export class ContactEntryForm extends LitElement {
   @state()
   private comment: string = '';
 
+  @state()
+  private contactId: string | undefined = undefined;
+
+  @state()
+  private timestamp: number | undefined = undefined;
+
   private get level2Categories(): Category[] {
     if (!this.selectedLevel1) return [];
     const level1 = this.categories.find(cat => cat.id === this.selectedLevel1);
@@ -129,7 +135,7 @@ export class ContactEntryForm extends LitElement {
     this.comment = (e.target as HTMLTextAreaElement).value;
   }
 
-  public async loadContact(contact: { level1: string, level2: string, level3: string, comment: string }) {
+  public async loadContact(contact: { level1: string, level2: string, level3: string, comment: string, id?: string, timestamp?: number }) {
     this.selectedLevel1 = contact.level1;
     await this.updateComplete; // Wait for Lit to update level2 options
 
@@ -138,6 +144,8 @@ export class ContactEntryForm extends LitElement {
 
     this.selectedLevel3 = contact.level3;
     this.comment = contact.comment;
+    this.contactId = contact.id;
+    this.timestamp = contact.timestamp;
   }
 
 
@@ -151,7 +159,9 @@ export class ContactEntryForm extends LitElement {
       level1: this.selectedLevel1,
       level2: this.selectedLevel2,
       level3: this.selectedLevel3,
-      comment: this.comment
+      comment: this.comment,
+      id: this.contactId,
+      timestamp: this.timestamp
     };
 
     this.dispatchEvent(new CustomEvent('save', {
@@ -166,6 +176,8 @@ export class ContactEntryForm extends LitElement {
     this.selectedLevel2 = '';
     this.selectedLevel3 = '';
     this.comment = '';
+    this.contactId = undefined;
+    this.timestamp = undefined;
   }
 
   render() {
