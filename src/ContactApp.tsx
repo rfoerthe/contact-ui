@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {ContactEntryForm} from "./ContactEntryForm";
 import {ContactDisplayTable} from "./ContactDisplayTable";
 import {exampleCategories} from "./example-categories";
-import type {Category, ContactEntry} from "./types.ts";
+import type {Category, ContactEntry} from "./types";
 import './ContactApp.css';
 
 export const ContactApp: React.FC = () => {
@@ -10,11 +10,10 @@ export const ContactApp: React.FC = () => {
 		const saved = localStorage.getItem("contacts");
 		return saved ? JSON.parse(saved) : [];
 	});
+
 	const categories: Category[] = exampleCategories;
 
-
 	const [editContact, setEditContact] = useState<ContactEntry | null>(null);
-
 
 	// Save contacts to localStorage whenever changed
 	useEffect(() => {
@@ -55,6 +54,7 @@ export const ContactApp: React.FC = () => {
 
 	const handleCancel = () => {
 		if (editContact) {
+			// add contact again (unchanged)
 			setContacts(prev =>
 				[...prev.filter(c => c.id !== editContact.id), editContact]
 			);
