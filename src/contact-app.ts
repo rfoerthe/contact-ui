@@ -1,22 +1,7 @@
-// Vanilla Web Component version of contact-app.ts
 import {exampleCategories} from './example-categories';
 import './contact-entry-form.ts'
 import './contact-display-table.ts'
-
-interface Category {
-	id: string;
-	name: string;
-	children?: Category[];
-}
-
-interface ContactEntry {
-	level1: string;
-	level2: string;
-	level3: string;
-	comment: string;
-	id?: string;
-	timestamp?: number;
-}
+import type {Category, ContactEntry} from "./types.ts";
 
 class ContactApp extends HTMLElement {
 	private contacts: ContactEntry[] = [];
@@ -61,13 +46,14 @@ class ContactApp extends HTMLElement {
       <h1>Contact Management</h1>
       <h2 class="sub-title">Based on vanilla Web Components, TypeScript and Vite</h2>
 
-      <contact-entry-form></contact-entry-form>
+      <contact-entry-form categories="${JSON.stringify(ContactApp.categories).replace(/"/g, '&quot;')}"></contact-entry-form>
       <contact-display-table></contact-display-table>
     `;
 
 		// Pass categories and contacts to the forms/tables (ensure web components receive data)
-		const form = this.shadowRoot.querySelector('contact-entry-form') as any;
-		if (form) form.categories = ContactApp.categories;
+
+		// const form = this.shadowRoot.querySelector('contact-entry-form') as any;
+		//if (form) form.categories = ContactApp.categories;
 
 		const table = this.shadowRoot.querySelector('contact-display-table') as any;
 		if (table) {

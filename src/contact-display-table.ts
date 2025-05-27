@@ -1,19 +1,4 @@
-// Vanilla Web Component version of contact-display-table.ts
-
-interface Category {
-	id: string;
-	name: string;
-	children?: Category[];
-}
-
-interface ContactEntry {
-	level1: string;
-	level2: string;
-	level3: string;
-	comment: string;
-	id?: string;
-	timestamp?: number;
-}
+import type {Category, ContactEntry} from "./types.ts";
 
 class ContactDisplayTable extends HTMLElement {
 	constructor() {

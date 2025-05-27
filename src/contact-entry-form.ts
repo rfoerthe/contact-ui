@@ -1,18 +1,19 @@
 // Vanilla Web Component version of contact-entry-form.ts
 
-interface Category {
-    id: string;
-    name: string;
-    children?: Category[];
-}
+import type {Category, ContactEntry} from "./types.ts";
 
 class ContactEntryForm extends HTMLElement {
     private selectedLevel1: string = '';
     private selectedLevel2: string = '';
     private selectedLevel3: string = '';
     private comment: string = '';
-    private contactId: String | undefined = undefined;
+    private contactId: string | undefined = undefined;
     private timestamp: number | undefined = undefined;
+
+    // Beobachtete Attribute definieren
+    static get observedAttributes() {
+        return ['categories'];
+    }
 
     constructor() {
         super();
@@ -34,7 +35,22 @@ class ContactEntryForm extends HTMLElement {
 
     set categories(value: Category[]) {
         this._categories = value;
+        // Attribut setzen für Synchronisation
+        this.setAttribute('categories', JSON.stringify(value));
         this.render();
+    }
+
+    // Attribut-Änderungen abfangen
+    attributeChangedCallback(name: string, _oldValue: string | null, newValue: string | null) {
+        if (name === 'categories' && newValue) {
+            try {
+                this._categories = JSON.parse(newValue);
+                this.render();
+            } catch (error) {
+                console.error('Invalid JSON for categories attribute:', error);
+                this._categories = [];
+            }
+        }
     }
 
     get level2Categories(): Category[] {
@@ -86,22 +102,13 @@ class ContactEntryForm extends HTMLElement {
     }
 
     handleCancel() {
-        const formData = {
-            level1: this.selectedLevel1,
-            level2: this.selectedLevel2,
-            level3: this.selectedLevel3,
-            comment: this.comment,
-            id: this.contactId,
-            timestamp: this.timestamp,
-        };
         this.dispatchEvent(new CustomEvent('cancel', {
-            detail: formData,
             bubbles: true, composed: true}));
         this.resetForm();
     }
 
     handleSave() {
-        const formData = {
+        const formData : ContactEntry = {
             level1: this.selectedLevel1,
             level2: this.selectedLevel2,
             level3: this.selectedLevel3,
