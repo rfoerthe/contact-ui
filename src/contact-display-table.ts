@@ -1,21 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import {customElement, property} from 'lit/decorators.js';
+import type {Category, ContactEntry} from "./types.ts";
 
-
-interface ContactEntry {
-  level1: string;
-  level2: string;
-  level3: string;
-  comment: string;
-  id?: string; // Optional unique identifier
-  timestamp?: number; // Optional timestamp
-}
-
-interface Category {
-  id: string;
-  name: string;
-  children?: Category[];
-}
 
 @customElement('contact-display-table')
 export class ContactDisplayTable extends LitElement {

@@ -1,23 +1,9 @@
-import { LitElement, html, css } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
-import { exampleCategories } from './example-categories';
+import {css, html, LitElement} from 'lit';
+import {customElement, state} from 'lit/decorators.js';
+import {exampleCategories} from './example-categories';
 import './contact-entry-form';
 import './contact-display-table';
-
-interface Category {
-  id: string;
-  name: string;
-  children?: Category[];
-}
-
-interface ContactEntry {
-  level1: string;
-  level2: string;
-  level3: string;
-  comment: string;
-  id?: string;
-  timestamp?: number;
-}
+import type {Category, ContactEntry} from "./types.ts";
 
 @customElement('contact-app')
 export class ContactApp extends LitElement {
@@ -46,7 +32,7 @@ export class ContactApp extends LitElement {
   private contacts: ContactEntry[] = [];
 
   @state()
-  private editContactId?: string = undefined;
+  private editContact: ContactEntry | undefined = undefined;
 
   firstUpdated() {
     // Load contacts from localStorage
@@ -60,6 +46,7 @@ export class ContactApp extends LitElement {
     const contactData = e.detail;
     let newContact: ContactEntry;
     if (contactData.id) {
+      // handling save after editing existing entry
       newContact = {...contactData};
     } else {
       newContact = {
@@ -68,15 +55,14 @@ export class ContactApp extends LitElement {
         timestamp: Date.now()
       };
     }
-    this.editContactId = undefined;
+    this.editContact = undefined;
     this.contacts = [...this.contacts.filter(contact => contact.id !== newContact.id), newContact];
     localStorage.setItem('contacts', JSON.stringify(this.contacts));
   }
 
   private handleCancel() {
-    this.editContactId = undefined;
+    this.editContact = undefined;
   }
-
 
   private handleDelete(e: CustomEvent) {
     const id = e.detail;
@@ -85,11 +71,7 @@ export class ContactApp extends LitElement {
   }
 
   private handleEdit(e: CustomEvent) {
-    const contact = e.detail;
-    // Load contact into the form
-    const entryForm = this.renderRoot?.querySelector('contact-entry-form');
-    entryForm?.loadContact(contact);
-    this.editContactId = contact.id;
+    this.editContact = e.detail;
   }
 
   render() {
@@ -98,13 +80,14 @@ export class ContactApp extends LitElement {
 	  <h2 class="sub-title">Based on Lit, TypeScript and Vite</h2>
       <contact-entry-form
         .categories=${ContactApp.categories}
+        .contact=${this.editContact}
         @save=${this.handleSave}
         @cancel=${this.handleCancel}
       ></contact-entry-form>
       <contact-display-table
         .contacts=${this.contacts}
         .categories=${ContactApp.categories}
-        .editContactId=${this.editContactId}
+        .editContactId=${this.editContact?.id}
         @delete-contact=${this.handleDelete}
         @edit-contact=${this.handleEdit}
       ></contact-display-table>

@@ -1,5 +1,6 @@
-import { LitElement, html, css } from 'lit';
+import {LitElement, html, css, type PropertyValues} from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import type {ContactEntry} from "./types";
 
 interface Category {
   id: string;
@@ -86,6 +87,15 @@ export class ContactEntryForm extends LitElement {
   @property({ type: Array })
   categories: Category[] = [];
 
+  @property({ type: Object })
+  contact: ContactEntry | null = null;
+
+  willUpdate(changedProperties: PropertyValues) {
+    if (changedProperties.has('contact') && this.contact) {
+      this.updateFormFromContact();
+    }
+  }
+
   @state()
   private selectedLevel1: string = '';
 
@@ -135,17 +145,19 @@ export class ContactEntryForm extends LitElement {
     this.comment = (e.target as HTMLTextAreaElement).value;
   }
 
-  public async loadContact(contact: { level1: string, level2: string, level3: string, comment: string, id?: string, timestamp?: number }) {
-    this.selectedLevel1 = contact.level1;
+  private async updateFormFromContact() {
+    if (!this.contact) return;
+
+    this.selectedLevel1 = this.contact.level1;
     await this.updateComplete; // Wait for Lit to update level2 options
 
-    this.selectedLevel2 = contact.level2;
+    this.selectedLevel2 = this.contact.level2;
     await this.updateComplete; // Wait for Lit to update level3 options
 
-    this.selectedLevel3 = contact.level3;
-    this.comment = contact.comment;
-    this.contactId = contact.id;
-    this.timestamp = contact.timestamp;
+    this.selectedLevel3 = this.contact.level3;
+    this.comment = this.contact.comment;
+    this.contactId = this.contact.id;
+    this.timestamp = this.contact.timestamp;
   }
 
 
@@ -155,7 +167,7 @@ export class ContactEntryForm extends LitElement {
   }
 
   private handleSave() {
-    const formData = {
+    const formData : ContactEntry = {
       level1: this.selectedLevel1,
       level2: this.selectedLevel2,
       level3: this.selectedLevel3,
