@@ -35,12 +35,12 @@ class ContactEntryForm extends HTMLElement {
 
     set categories(value: Category[]) {
         this._categories = value;
-        // Attribut setzen für Synchronisation
+        // Attribut setzen fÃ¼r Synchronisation
         this.setAttribute('categories', JSON.stringify(value));
         this.render();
     }
 
-    // Attribut-Änderungen abfangen
+    // Attribut-Ã„nderungen abfangen
     attributeChangedCallback(name: string, _oldValue: string | null, newValue: string | null) {
         if (name === 'categories' && newValue) {
             try {
