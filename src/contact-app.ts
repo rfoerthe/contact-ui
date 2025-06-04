@@ -1,30 +1,14 @@
-import {css, html, LitElement} from 'lit';
+import {html, LitElement} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {exampleCategories} from './example-categories';
 import './contact-entry-form';
 import './contact-display-table';
-import type {Category, ContactEntry} from "./types.ts";
+import type {Category, ContactEntry} from "./types";
+import {contactAppStyles} from "./contact-app-styles";
 
 @customElement('contact-app')
 export class ContactApp extends LitElement {
-  static styles = css`
-    :host {
-      display: block;
-      font-family: Arial, sans-serif;
-      max-width: 1024px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-	h1 {
-	  color: #333;
-	  margin-bottom: 10px;
-	}
-	h2.sub-title {
-	  color: #333;
-	  font-size: 14px;
-	  font-style: italic;
-	}
-  `;
+  static styles = contactAppStyles;
 
   static categories: Category[] = exampleCategories;
 
