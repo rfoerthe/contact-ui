@@ -1,7 +1,8 @@
 import {exampleCategories} from './example-categories';
-import './contact-entry-form.ts'
-import './contact-display-table.ts'
-import type {Category, ContactEntry} from "./types.ts";
+import {contactAppCss} from "./contact-app-css";
+import './contact-entry-form'
+import './contact-display-table'
+import type {Category, ContactEntry} from "./types";
 
 class ContactApp extends HTMLElement {
 	private contacts: ContactEntry[] = [];
@@ -25,24 +26,8 @@ class ContactApp extends HTMLElement {
 	render() {
 		if (!this.shadowRoot) return;
 		this.shadowRoot.innerHTML = `
-      <style>
-        :host {
-          display: block;
-          font-family: Arial, sans-serif;
-          max-width: 1024px;
-          margin: 0 auto;
-          padding: 20px;
-        }
-        h1 {
-    		color: #333;
-    		margin-bottom: 10px;
-		}
-		h2.sub-title {
-			color: #333;
-			font-size: 14px;
-			font-style: italic;
-		}
-      </style>
+      ${contactAppCss}
+      
       <h1>Contact Management</h1>
       <h2 class="sub-title">Based on vanilla Web Components, TypeScript and Vite</h2>
 
