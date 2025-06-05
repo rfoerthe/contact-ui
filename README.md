@@ -72,9 +72,10 @@ Indentation is automatically handled by most modern editors. Alternatively, you 
 
 ## Further Resources
 
-- [Lit Documentation](https://lit.dev/docs/)
 - [Vite Documentation](https://vitejs.dev/guide/)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
+- [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
+- [Lit Documentation](https://lit.dev/docs/)
 - [React Documentation](https://react.dev/)
 
 ---
