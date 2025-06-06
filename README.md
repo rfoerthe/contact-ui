@@ -1,9 +1,12 @@
 # contact-ui
 
 A contact management proof of concept app built in three configurations:
-* with vanilla Web Components
+* with vanilla [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
+  (Branch: vanilla-webcomponents)
 * with [Lit](https://lit.dev/)
-* with React
+  (Branches: master, lit-webcomponents)
+* with [React](https://react.dev),
+  (Branch: react-components)
 
 and TypeScript featuring project setup and build processes managed by [Vite](https://vitejs.dev/).
 
