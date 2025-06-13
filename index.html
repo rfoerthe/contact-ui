@@ -6,8 +6,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact Management</title>
   <script type="module" src="./src/contact-app.ts"></script>
+  <script type="module" src="./src/context-menu-label.ts"></script>
 </head>
 <body>
+<!--
   <contact-app></contact-app>
+-->
+
+  <context-menu-label
+          label-text="M"
+          id="demo-menu">
+  </context-menu-label>
+
+  <script>
+    // Add event listener for menu selection
+    document.getElementById('demo-menu').addEventListener('menu-item-selected', (event) => {
+      console.log('Ausgewähltes Menü-Item:', event.detail.selectedItem);
+      alert(`Sie haben "${event.detail.selectedItem}" ausgewählt`);
+    });
+
+    // Set menu items dynamically (optional)
+    const menuComponent = document.getElementById('demo-menu');
+    menuComponent.menuItems = ['Kopieren', 'Einfügen', 'Löschen', 'Eigenschaften'];
+    //menuComponent.menuItems = ['GleichAnzeigen'];
+  </script>
 </body>
 </html>
