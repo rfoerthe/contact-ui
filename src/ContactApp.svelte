@@ -52,8 +52,18 @@
 <div class="component-root">
   <h1>Contact Management</h1>
   <h2 class="sub-title">Based on Svelte 5, TypeScript and Vite</h2>
-  <ContactEntryForm {categories} contact={editContact} save={handleSave} cancel={handleCancel}></ContactEntryForm>
-  <ContactDisplayTable {contacts} {categories} editContactId={editContact?.id} cdelete={handleDelete} edit={handleEdit}
+  <ContactEntryForm 
+    {categories} 
+    contact={editContact} 
+    save={handleSave} 
+    cancel={handleCancel}>
+  </ContactEntryForm>
+  <ContactDisplayTable 
+    {contacts} 
+    {categories} 
+    editContactId={editContact?.id} 
+    cdelete={handleDelete} 
+    edit={handleEdit}
   ></ContactDisplayTable>
 </div>
 
