@@ -1,8 +1,17 @@
 <script lang="ts">
     import type {Category, ContactEntry} from './types';
 
-    let {categories = [], contacts, cdelete, edit, editContactId = undefined} = $props();
+    interface Props {
+        categories?: Category[];
+        contacts: ContactEntry[];
+        cdelete: (id: string) => void;
+        edit: (contact: ContactEntry) => void;
+        editContactId?: string;
+    }
 
+    let {categories = [], contacts, cdelete, edit, editContactId = undefined} : Props = $props();
+
+    let sortedContacts: ContactEntry[] = $derived([...contacts].sort((a, b) => (a.timestamp ?? 0) - (b.timestamp ?? 0)));
 
     // Helper method to find category name by id
     function getCategoryName(id: string): string {
@@ -65,7 +74,7 @@
             </tr>
             </thead>
             <tbody>
-            {#each [...contacts].sort((a, b) => (a.timestamp ?? 0) - (b.timestamp ?? 0)) as contact}
+            {#each sortedContacts as contact}
                 <tr class:edit={editContactId === contact.id}>
                     <td class="category-path">{getCategoryPath(contact)}</td>
                     <td class="comment">{contact.comment}</td>

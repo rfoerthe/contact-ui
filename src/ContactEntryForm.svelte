@@ -3,10 +3,10 @@
 
     let { categories = [], contact = undefined, save, cancel } = $props();
 
-    let selectedLevel1 : string | undefined= $state();
-    let selectedLevel2 : string | undefined= $state();
-    let selectedLevel3 : string | undefined= $state();
-    let comment : string | undefined= $state();
+    let selectedLevel1: string = $state('');
+    let selectedLevel2: string = $state('');
+    let selectedLevel3: string = $state('');
+    let comment: string = $state('');
 
     let contactId: string | undefined = $state(undefined);
     let timestamp: number | undefined = $state(undefined);
