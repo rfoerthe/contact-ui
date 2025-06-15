@@ -1,4 +1,4 @@
-import {mount} from 'svelte'
+import { mount } from 'svelte'
 import ContactApp from "./ContactApp.svelte";
 
 const contactApp = mount(ContactApp, {
