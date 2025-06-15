@@ -1,12 +1,14 @@
 # contact-ui
 
-A contact management proof of concept app built in three configurations:
+A contact management proof of concept app built in four configurations:
 * with vanilla [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
   (Branch: vanilla-webcomponents)
 * with [Lit](https://lit.dev/)
   (Branches: master, lit-webcomponents)
 * with [React](https://react.dev),
   (Branch: react-components)
+* with [Svelte](https://svelte.dev),
+  (Branch: svelte-components)
 
 and TypeScript featuring project setup and build processes managed by [Vite](https://vitejs.dev/).
 
@@ -80,7 +82,7 @@ Indentation is automatically handled by most modern editors. Alternatively, you 
 - [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
 - [Lit Documentation](https://lit.dev/docs/)
 - [React Documentation](https://react.dev/)
-
+- [Svelte](https://svelte.dev)
 ---
 
 > For questions or issues, please open an issue in the repository.
