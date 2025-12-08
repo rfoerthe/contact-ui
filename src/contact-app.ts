@@ -18,7 +18,8 @@ export class ContactApp extends LitElement {
   @state()
   private editContact: ContactEntry | undefined = undefined;
 
-  firstUpdated() {
+  connectedCallback() {
+    super.connectedCallback();
     // Load contacts from localStorage
     const savedContacts = localStorage.getItem('contacts');
     if (savedContacts) {
