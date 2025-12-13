@@ -17,7 +17,7 @@ export class ContactEntryForm extends LitElement {
 	categories: Category[] = [];
 
 	@property({type: Object})
-	contact: ContactEntry | null = null;
+	contact: ContactEntry | undefined = undefined;
 
 	willUpdate(changedProperties: PropertyValues) {
 		if (changedProperties.has('contact') && this.contact) {
