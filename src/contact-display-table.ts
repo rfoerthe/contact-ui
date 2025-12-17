@@ -86,13 +86,30 @@ export class ContactDisplayTable extends LitElement {
 										${[...this.contacts]
 														.sort((a, b) => (a.timestamp ?? 0) - (b.timestamp ?? 0))
 														.map(contact => html`
-															<tr class="${this.editContactId === contact.id ? "edit" : ""}">
+															<tr
+																class="${this.editContactId === contact.id ? "edit" : ""} clickable"
+																tabindex="0"
+																role="button"
+																@click=${() => this.handleEdit(contact)}
+																@keydown=${(e: KeyboardEvent) => {
+																	if (e.key === 'Enter' || e.key === ' ') {
+																		e.preventDefault();
+																		this.handleEdit(contact);
+																	}
+																}}
+															>
 																<td class="category-path">${this.getCategoryPath(contact)}</td>
 																<td class="comment">${contact.comment}</td>
 																<td>
 																	<div class="actions">
-																		<button class="edit-btn" @click=${() => this.handleEdit(contact)}>Edit</button>
-																		<button class="delete-btn" @click=${() => this.handleDelete(contact)}>Delete</button>
+																		<button
+																			class="delete-btn"
+																			?disabled=${this.editContactId === contact.id}
+																			aria-disabled=${this.editContactId === contact.id}
+																			@click=${(e: Event) => { e.stopPropagation(); this.handleDelete(contact); }}
+																		>
+																			Delete
+																		</button>
 																	</div>
 																</td>
 															</tr>

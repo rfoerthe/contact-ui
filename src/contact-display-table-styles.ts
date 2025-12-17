@@ -62,12 +62,25 @@ export const contactDisplayTableStyles = css`
     }
 
     .edit {
-        background-color: #f6e0b6;
+         background-color: #e8f3ff;
     }
 
     .actions {
         display: flex;
         gap: 8px;
+    }
+
+    /* Make rows with .clickable show hand cursor and hover/focus styles */
+    tr.clickable {
+        cursor: pointer;
+    }
+
+    tr.clickable:hover {
+        background-color: #f3f9ff;
+    }
+
+    tr.clickable:focus {
+        background-color: #e8f3ff;
     }
 
     button {
@@ -81,6 +94,17 @@ export const contactDisplayTableStyles = css`
         background-color: #f44336;
         color: white;
         border: none;
+    }
+
+    /* Disabled / editing state for delete button */
+    .delete-btn:disabled,
+    .delete-btn[aria-disabled="true"] {
+        background-color: #efefef;
+        color: #8a8a8a;
+        border: 1px solid #ddd;
+        cursor: not-allowed;
+        opacity: 0.8;
+        pointer-events: none;
     }
 
     .edit-btn {
