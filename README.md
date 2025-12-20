@@ -1,24 +1,27 @@
 # contact-ui
 
 A contact management proof of concept app built in three configurations:
-* with vanilla [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
+
+- with vanilla [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
   (Branch: vanilla-webcomponents)
-* with [Lit](https://lit.dev/)
+- with [Lit](https://lit.dev/)
   (Branches: master, lit-webcomponents)
-* with [React](https://react.dev),
+- with [React](https://react.dev),
   (Branch: react-components)
 
 and TypeScript featuring project setup and build processes managed by [Vite](https://vitejs.dev/).
 
 ## Project Structure
 
-    contact-ui/ 
-    ├── public/ # Public static assets 
-    ├── src/ # Application source code (TypeScript, CSS, TSX) 
-    ├── index.html # Main entry point of the application 
-    ├── package.json # Project and dependency definitions 
-    ├── package-lock.json # Exact dependency versions 
-    ├── tsconfig.json # TypeScript configuration
+```text
+contact-ui/ 
+├── public/ # Public static assets 
+├── src/ # Application source code (TypeScript, CSS, TSX) 
+├── index.html # Main entry point of the application 
+├── package.json # Project and dependency definitions 
+├── package-lock.json # Exact dependency versions 
+├── tsconfig.json # TypeScript configuration
+```
 
 ## Prerequisites
 
@@ -36,9 +39,9 @@ and TypeScript featuring project setup and build processes managed by [Vite](htt
 
 2. **Install dependencies**
 
-   ```bash
-   npm install
-   ```
+    ```bash
+    npm install
+    ```
 
 ## Build Process
 
